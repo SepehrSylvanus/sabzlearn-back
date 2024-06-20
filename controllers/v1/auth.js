@@ -2,6 +2,7 @@ const userModel = require("../../models/user");
 const registerValidator = require("./../../validators/register");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const banUserModel = require("./../../models/ban-phone");
 exports.register = async (req, res) => {
   console.log(req.body);
   const validationResult = registerValidator(req.body);
@@ -15,9 +16,20 @@ exports.register = async (req, res) => {
   const isUserExist = await userModel.findOne({
     $or: [{ username }, { email }],
   });
+
   if (isUserExist) {
     return res.status(409).json({
       message: "username or email is duplicated",
+    });
+  }
+
+  const isUserBan = await banUserModel.find({
+    phone,
+  });
+
+  if (isUserBan.length) {
+    return res.status(403).json({
+      message: "This phone number banned",
     });
   }
 
