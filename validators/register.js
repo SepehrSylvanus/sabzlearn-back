@@ -18,6 +18,11 @@ const schema = {
     min: 10,
     max: 100,
   },
+  phone: {
+    type: "number",
+
+    max: 11,
+  },
   password: {
     type: "string",
     min: 8,
