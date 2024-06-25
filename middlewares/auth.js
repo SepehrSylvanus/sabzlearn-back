@@ -17,6 +17,8 @@ module.exports = async (req, res, next) => {
 
     const user = await userModel.findById(jwtPayload.id).lean();
 
+    Reflect.deleteProperty(user, "password");
+
     req.user = user;
 
     next();
