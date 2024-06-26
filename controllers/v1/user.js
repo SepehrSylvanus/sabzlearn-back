@@ -20,3 +20,9 @@ exports.banUser = async (req, res) => {
     message: "Server error",
   });
 };
+
+exports.getAll = async (req, res) => {
+  const users = await userModel.find({});
+
+  return res.json(users);
+};

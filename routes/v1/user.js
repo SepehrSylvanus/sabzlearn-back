@@ -4,6 +4,8 @@ const authMiddleware = require("./../../middlewares/auth");
 const isAdminMiddleware = require("./../../middlewares/isAdmin");
 const router = express.Router();
 
+router.route("/").get(authMiddleware, isAdminMiddleware, userContoller.getAll);
+
 router
   .route("/ban/:id")
   .post(authMiddleware, isAdminMiddleware, userContoller.banUser);
