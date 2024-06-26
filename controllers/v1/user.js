@@ -48,3 +48,35 @@ exports.removeUser = async (req, res) => {
     message: "User removed successfully",
   });
 };
+
+exports.changeRole = async (req, res) => {
+  const { id } = req.body;
+  const isValidUserId = mongoose.Types.ObjectId.isValid(id);
+
+  if (!isValidUserId) {
+    return res.status(409).json({
+      message: "User id is not valid",
+    });
+  }
+  if (!isValidUserId) {
+    return res.status(409).json({
+      message: "User id is not valid",
+    });
+  }
+  const user = await userModel.findOne({ _id: id });
+
+  let newRole = user.role === "ADMIN" ? "USER" : "ADMIN";
+
+  const updatedUser = await userModel.findOneAndUpdate(
+    { _id: id },
+    {
+      role: newRole,
+    }
+  );
+
+  if (updatedUser) {
+    return res.json({
+      message: "User role changed successfully",
+    });
+  }
+};

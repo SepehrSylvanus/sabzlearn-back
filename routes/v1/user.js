@@ -9,6 +9,9 @@ router.route("/").get(authMiddleware, isAdminMiddleware, userContoller.getAll);
 router
   .route("/:id")
   .delete(authMiddleware, isAdminMiddleware, userContoller.removeUser);
+router
+  .route("/role")
+  .put(authMiddleware, isAdminMiddleware, userContoller.changeRole);
 
 router
   .route("/ban/:id")
