@@ -7,6 +7,10 @@ const router = express.Router();
 router.route("/").get(authMiddleware, isAdminMiddleware, userContoller.getAll);
 
 router
+  .route("/:id")
+  .delete(authMiddleware, isAdminMiddleware, userContoller.removeUser);
+
+router
   .route("/ban/:id")
   .post(authMiddleware, isAdminMiddleware, userContoller.banUser);
 
