@@ -4,7 +4,10 @@ const authMiddleware = require("./../../middlewares/auth");
 const isAdminMiddleware = require("./../../middlewares/isAdmin");
 const router = express.Router();
 
-router.route("/").get(authMiddleware, isAdminMiddleware, userContoller.getAll);
+router
+  .route("/")
+  .get(authMiddleware, isAdminMiddleware, userContoller.getAll)
+  .put(authMiddleware, userContoller.updateUser);
 
 router
   .route("/:id")

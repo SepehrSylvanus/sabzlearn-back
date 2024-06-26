@@ -1,6 +1,7 @@
 const userModel = require("./../../models/user");
 const banUserModel = require("./../../models/ban-phone");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 exports.banUser = async (req, res) => {
   const mainUser = await userModel.findOne({
     _id: req.params.id,
@@ -79,4 +80,30 @@ exports.changeRole = async (req, res) => {
       message: "User role changed successfully",
     });
   }
+};
+
+exports.updateUser = async (req, res) => {
+  const { name, username, email, password, phone } = req.body;
+  let hashedPassword;
+  if (password) {
+    hashedPassword = await bcrypt.hash(password, 12);
+  }
+
+  const user = await userModel
+    .findByIdAndUpdate(
+      {
+        _id: req.user._id,
+      },
+      {
+        name,
+        username,
+        email,
+        password: hashedPassword,
+        phone,
+      }
+    )
+    .select("-password")
+    .lean();
+
+  return res.json(user);
 };
