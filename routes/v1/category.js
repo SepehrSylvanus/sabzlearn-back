@@ -14,4 +14,4 @@ router
   .delete(authMiddleware, isAdminMiddleware, categoryContoller.remove)
   .put(authMiddleware, isAdminMiddleware, categoryContoller.update);
 
-module.exports.router;
+module.exports = router;
