@@ -13,5 +13,7 @@ module.exports = multer.diskStorage({
     //   .digest("hex");
     const ext = path.extname(file.originalname);
     cb(null, filename + ext);
+
+    console.log("file name = ", filename + ext);
   },
 });
